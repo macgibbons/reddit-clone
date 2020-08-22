@@ -95,7 +95,6 @@ let UserResolver = class UserResolver {
             });
             try {
                 yield em.persistAndFlush(user);
-                return { user };
             }
             catch (err) {
                 if (err.code === '23505') {
@@ -109,6 +108,7 @@ let UserResolver = class UserResolver {
                     };
                 }
             }
+            return { user };
         });
     }
 };
@@ -125,7 +125,7 @@ UserResolver = __decorate([
 ], UserResolver);
 exports.UserResolver = UserResolver;
 let LoginResolver = class LoginResolver {
-    login(options, { em }) {
+    login(options, { em, req }) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield em.findOne(User_1.User, { username: options.username });
             if (!user) {
@@ -147,6 +147,7 @@ let LoginResolver = class LoginResolver {
                     ],
                 };
             }
+            req.session.userId = user.id;
             return { user, };
         });
     }

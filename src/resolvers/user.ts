@@ -62,8 +62,6 @@ export class UserResolver {
 
         try {
             await em.persistAndFlush(user)
-            return { user };
-
         } catch(err) {
             if (err.code === '23505'){
                 return {
@@ -76,6 +74,7 @@ export class UserResolver {
                 }
             }
         }
+        return { user };
     }
 }
 
@@ -84,7 +83,7 @@ export class LoginResolver {
     @Mutation(() => UserResponse)
     async login(
         @Arg("options") options: UsernamePasswordInput,
-        @Ctx() { em }: MyContext
+        @Ctx() { em, req }: MyContext
      ): Promise<UserResponse> {
         const user = await em.findOne(User, {username: options.username})
         if (!user) {
@@ -107,6 +106,7 @@ export class LoginResolver {
                 ],
             };
         }
+        req.session!.userId = user.id
 
         return {user,}
     }
