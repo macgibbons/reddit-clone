@@ -1,5 +1,5 @@
 import { Resolver, Arg, InputType, Field, Mutation, Ctx, ObjectType, Query } from 'type-graphql';
-import { MyContext } from 'src/types';
+import { MyContext } from '../types';
 import argon2 from 'argon2'
 import { User } from '../entities/User';
 
