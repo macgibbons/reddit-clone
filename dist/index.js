@@ -43,6 +43,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
             secure: constants_1.__prod__,
             sameSite: "lax"
         },
+        saveUninitialized: false,
         secret: 'change to ENV later',
         resave: false,
     }));
