@@ -4,9 +4,11 @@ import { Wrapper } from "../components/Wrapper";
 import { InputField } from "../components/InputField";
 import React from "react";
 import { useRouter } from "next/router";
+import { withUrqlClient } from "next-urql";
 
 import { useLoginMutation } from "../generated/graphql";
 import { toErrorMap } from "../utils/toErrorMap";
+import { createUrqlCliet } from "../utils/createUrqlClient";
 
 interface loginProps {}
 
@@ -22,6 +24,7 @@ const Login: React.FC<loginProps> = ({}) => {
           if (response.data?.login.errors) {
             setErrors(toErrorMap(response.data.login.errors));
           } else if (response.data?.login.user) {
+            console.log("user ", response.data.login.user);
             router.push("/");
           }
         }}
@@ -56,4 +59,4 @@ const Login: React.FC<loginProps> = ({}) => {
   );
 };
 
-export default Login;
+export default withUrqlClient(createUrqlCliet)(Login);
