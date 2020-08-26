@@ -4,9 +4,11 @@ import { Wrapper } from "../components/Wrapper";
 import { InputField } from "../components/InputField";
 import React from "react";
 import { useRouter } from "next/router";
+import { withUrqlClient } from "next-urql";
 
 import { useRegisterMutation } from "../generated/graphql";
 import { toErrorMap } from "../utils/toErrorMap";
+import { createUrqlCliet } from "../utils/createUrqlClient";
 
 interface registerProps {}
 
@@ -56,4 +58,4 @@ const Register: React.FC<registerProps> = ({}) => {
   );
 };
 
-export default Register;
+export default withUrqlClient(createUrqlCliet)(Register);
